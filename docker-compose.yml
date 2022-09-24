@@ -6,19 +6,18 @@ services:
         build: ./backend
         ports:
             - 8000:8000
-        # environment:
-        #     # DB_URL: mongodb://mongo/Ecommerce
-        #     DB_URL: mongodb://development:testpassword@localhost:27017
+        environment:
+            DB_URL: mongodb://db/Ecommerce
 
-    mongo:
+    db:
         image: mongo:5.0.3
         ports:
             - 27017:27017
         environment:
             MONGO_INITDB_ROOT_USERNAME: development
             MONGO_INITDB_ROOT_PASSWORD: testpassword
-        # volumes:
-        #     - ecvl:/data/db
+        volumes:
+            - ecvl:/data/db
 
     # mongo-express:
     #     image: mongo-express
@@ -29,5 +28,5 @@ services:
     #         ME_CONFIG_MONGODB_ADMINPASSWORD: testpassword
     #         ME_CONFIG_MONGODB_URL: mongodb://development:testpassword@mongo:27017/
 
-# volumes:
-#     ecvl:
+volumes:
+    ecvl:
