@@ -85,7 +85,7 @@ func AddAddress() gin.HandlerFunc {
 			c.IndentedJSON(400, response)
 			return
 		}
-		defer cancel()
+
 		ctx.Done()
 
 		response.Status = "OK"
@@ -138,7 +138,7 @@ func EditHomeAddress() gin.HandlerFunc {
 			c.IndentedJSON(500, response)
 			return
 		}
-		defer cancel()
+
 		ctx.Done()
 
 		response.Status = "OK"
@@ -191,7 +191,7 @@ func EditWorkAddress() gin.HandlerFunc {
 			c.IndentedJSON(500, response)
 			return
 		}
-		defer cancel()
+
 		ctx.Done()
 
 		response.Status = "OK"
@@ -237,7 +237,7 @@ func DeleteAddress() gin.HandlerFunc {
 			c.IndentedJSON(404, response)
 			return
 		}
-		defer cancel()
+
 		ctx.Done()
 
 		response.Status = "OK"

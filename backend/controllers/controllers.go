@@ -105,7 +105,6 @@ func SignUp() gin.HandlerFunc {
 			c.IndentedJSON(http.StatusInternalServerError, response)
 			return
 		}
-		defer cancel()
 
 		response.Status = "OK"
 		response.Code = http.StatusCreated
@@ -132,7 +131,6 @@ func LogIn() gin.HandlerFunc {
 		defer cancel()
 
 		err := UserCollection.FindOne(ctx, bson.M{"phone": user.Phone}).Decode(&founduser)
-		defer cancel()
 		if err != nil {
 			response.Status = "Failed"
 			response.Code = http.StatusInternalServerError
@@ -141,7 +139,6 @@ func LogIn() gin.HandlerFunc {
 			return
 		}
 		passwordIsValid, msg := VerifyPassword(founduser.Password, user.Password)
-		defer cancel()
 		if !passwordIsValid {
 			response.Status = "Failed"
 			response.Code = http.StatusInternalServerError
@@ -151,7 +148,6 @@ func LogIn() gin.HandlerFunc {
 			return
 		}
 		token, refreshToken, _ := generate.TokenGenerator(founduser.Phone, founduser.FirstName, founduser.LastName, founduser.UserId)
-		defer cancel()
 
 		updateErr := generate.UpdateAllTokens(token, refreshToken, founduser.UserId)
 		if updateErr != nil {
@@ -208,7 +204,6 @@ func GetAllProducts() gin.HandlerFunc {
 			c.IndentedJSON(400, response)
 			return
 		}
-		defer cancel()
 
 		response.Status = "OK"
 		response.Code = 200
@@ -265,7 +260,6 @@ func SearchProductByQuery() gin.HandlerFunc {
 			c.IndentedJSON(400, response)
 			return
 		}
-		defer cancel()
 
 		response.Status = "OK"
 		response.Code = 200
@@ -306,7 +300,6 @@ func GetAllOrders() gin.HandlerFunc {
 			c.IndentedJSON(400, response)
 			return
 		}
-		defer cancel()
 
 		response.Status = "OK"
 		response.Code = 200
@@ -340,7 +333,6 @@ func ProductAdderAdmin() gin.HandlerFunc {
 			c.IndentedJSON(http.StatusInternalServerError, response)
 			return
 		}
-		defer cancel()
 
 		response.Status = "OK"
 		response.Code = http.StatusOK
@@ -409,7 +401,6 @@ func ProductUpdaterAdmin() gin.HandlerFunc {
 			return
 		}
 
-		defer cancel()
 		ctx.Done()
 
 		response.Status = "OK"
